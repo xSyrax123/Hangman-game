@@ -80,7 +80,7 @@ class Hangman:
         """
          Returns a string with blanks.
         """
-        return ' '.join(self.blanks)
+        return ''.join(self.blanks)
 
 
     def _draw_hangman(self):
