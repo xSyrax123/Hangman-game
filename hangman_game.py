@@ -55,7 +55,6 @@ class Hangman:
             │
     ════════╛''')
 
-
     def __init__(self, word):
         """
          Our constructor class that instantiates the game.
@@ -67,13 +66,11 @@ class Hangman:
         self.blanks = list('_' * len(self.secret_word))
         self.used_letters = set() 
 
-
     def _spacer(self, length=50):
         """
          Returns a dash string to be used as a separator.
         """
         return '-' * length
-
 
     @property
     def _blanks_string(self):
@@ -82,14 +79,12 @@ class Hangman:
         """
         return ''.join(self.blanks)
 
-
     def _draw_hangman(self):
         """
          Returns a string with the current position of the hangman.
         """
         return f'{self.HANGMAN_PICS[self.max_trials-self.trials]}\n'
 
-    
     def _guess_letter(self, letter):
         """
          Replace the guessed letter in the blanks where it matches in the
@@ -103,20 +98,17 @@ class Hangman:
                 self.used_letters.add(letter)
         return good_guess
 
-
     def _is_valid_input(self, letter):
         """
          Return True if the input is a single letter in the alphabet.
         """
         return len(letter) == 1 and letter.isalpha()
 
-
     def _has_won(self):
         """
          Asigns a boolean value of True if the user guess the secret word.
         """
         return self._blanks_string == self.secret_word_low
-
 
     def play(self):
         """
