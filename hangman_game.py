@@ -68,7 +68,7 @@ class Hangman:
         self.used_letters = set() 
 
 
-    def __spacer(self, length=50):
+    def _spacer(self, length=50):
         """
          Returns a dash string to be used as a separator.
         """
@@ -76,21 +76,21 @@ class Hangman:
 
 
     @property
-    def __blanks_string(self):
+    def _blanks_string(self):
         """
          Returns a string with blanks.
         """
         return ''.join(self.blanks)
 
 
-    def __draw_hangman(self):
+    def _draw_hangman(self):
         """
          Returns a string with the current position of the hangman.
         """
         return f'{self.HANGMAN_PICS[self.max_trials-self.trials]}\n'
 
     
-    def __guess_letter(self, letter):
+    def _guess_letter(self, letter):
         """
          Replace the guessed letter in the blanks where it matches in the
          secret word and return True if that letter appeared in the secret word.
@@ -104,14 +104,14 @@ class Hangman:
         return good_guess
 
 
-    def __is_valid_input(self, letter):
+    def _is_valid_input(self, letter):
         """
          Return True if the input is a single letter in the alphabet.
         """
         return len(letter) == 1 and letter.isalpha()
 
 
-    def __has_won(self):
+    def _has_won(self):
         """
          Asigns a boolean value of True if the user guess the secret word.
         """
@@ -122,24 +122,24 @@ class Hangman:
         """
          The game stage.
         """
-        print(f'\nSecret word ({len(self.secret_word)} letters): {self.__blanks_string}')
-        print(self.__draw_hangman())
-        print(self.__spacer())
+        print(f'\nSecret word ({len(self.secret_word)} letters): {self._blanks_string}')
+        print(self._draw_hangman())
+        print(self._spacer())
 
         while self.trials > 0 and not self.__has_won():
             letter = input('\nEnter a letter: ').lower()
 
-            if not self.__is_valid_input(letter):
+            if not self._is_valid_input(letter):
                 print('The value entered is invalid.\n')
-                print(self.__spacer())
+                print(self._spacer())
                 continue
 
             if letter in self.used_letters:
                 print('This letter has already been entered. Enter another letter.\n')
-                print(self.__spacer())
+                print(self._spacer())
                 continue
 
-            guess_was_good = self.__guess_letter(letter)
+            guess_was_good = self._guess_letter(letter)
             self.used_letters.add(letter)
 
             if guess_was_good:
@@ -148,10 +148,10 @@ class Hangman:
             else:
                 self.trials -= 1
                 print(f'You missed and lost a life. You have {self.trials} trials left.')
-                print(self.__draw_hangman())
-                print(self.__spacer())
+                print(self._draw_hangman())
+                print(self._spacer())
                     
-        if self.__has_won():
+        if self._has_won():
             print(f'\nYou won. The secret word was: {self.secret_word}.')
         else:
             print(f'\nYou lost. The secret word was: {self.secret_word}.')
