@@ -65,12 +65,7 @@ class Hangman:
         self.secret_word_low = word.lower()
         self.blanks = list('_' * len(self.secret_word))
         self.used_letters = set() 
-
-    def _spacer(self, length=50):
-        """
-         Returns a dash string to be used as a separator.
-        """
-        return '-' * length
+        self.spacer = '-' * 50
 
     @property
     def _blanks_string(self):
@@ -84,7 +79,7 @@ class Hangman:
          Returns a string with the current position of the hangman.
         """
         return f'{self.HANGMAN_PICS[self.max_trials-self.trials]}\n'
-
+    
     def _guess_letter(self, letter):
         """
          Replace the guessed letter in the blanks where it matches in the
@@ -114,39 +109,39 @@ class Hangman:
         """
          The game stage.
         """
-        print(f'\nSecret word ({len(self.secret_word)} letters): {self._blanks_string}')
+        print(f"\nSecret word ({len(self.secret_word)} letters): {self._blanks_string}")
         print(self._draw_hangman())
-        print(self._spacer())
+        print(self.spacer)
 
-        while self.trials > 0 and not self.__has_won():
-            letter = input('\nEnter a letter: ').lower()
+        while self.trials > 0 and not self._has_won():
+            letter = input("\nEnter a letter: ").lower()
 
             if not self._is_valid_input(letter):
-                print('The value entered is invalid.\n')
-                print(self._spacer())
+                print("The value entered is invalid.\n")
+                print(self.spacer)
                 continue
 
             if letter in self.used_letters:
-                print('This letter has already been entered. Enter another letter.\n')
-                print(self._spacer())
+                print("This letter has already been entered. Enter another letter.\n")
+                print(self.spacer)
                 continue
 
             guess_was_good = self._guess_letter(letter)
             self.used_letters.add(letter)
 
             if guess_was_good:
-                print(f'{self.__blanks_string}\n')
-                print(self.__spacer())
+                print(f"{self._blanks_string}\n")
+                print(self.spacer)
             else:
                 self.trials -= 1
-                print(f'You missed and lost a life. You have {self.trials} trials left.')
+                print(f"You missed and lost a life. You have {self.trials} trials left.")
                 print(self._draw_hangman())
-                print(self._spacer())
+                print(self.spacer)
                     
         if self._has_won():
-            print(f'\nYou won. The secret word was: {self.secret_word}.')
+            print(f"\nYou won. The secret word was: {self.secret_word}.")
         else:
-            print(f'\nYou lost. The secret word was: {self.secret_word}.')
+            print(f"\nYou lost. The secret word was: {self.secret_word}.")
             
 
 def main():
@@ -154,12 +149,12 @@ def main():
      Selects a word from a list of words.
      This word is to be guessed in the game.
     """
-    with open('words.txt', 'r+', encoding='UTF-8') as words:
+    with open("words.txt", "r+", encoding="UTF-8") as words:
         secret_word = random.choice(words.read().split())
-        secret_word = ''.join(secret_word)
+        secret_word = "".join(secret_word)
     game = Hangman(secret_word)
     game.play()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
