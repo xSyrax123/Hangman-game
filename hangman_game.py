@@ -1,59 +1,59 @@
 #!/usr/bin/env python3
 # Hangman game
-import random
+from random import choice
 
 
 class Hangman:
-    HANGMAN_PICS = (r'''
+    HANGMAN_PICS = (r"""
         ┌───┐
         │   │
             │
             │
             │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
             │
             │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
         |   │
             │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
        /│   │
             │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
        /│\  │
             │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
        /│\  │
        /    │
             │
-    ════════╛''', r'''
+    ════════╛""", r"""
         ┌───┐
         │   │
         O   │
        /│\  │
        / \  │
             │
-    ════════╛''')
+    ════════╛""")
     SPACER = "-" * 50
 
     def __init__(self, word):
@@ -62,18 +62,18 @@ class Hangman:
         self.trials = self.max_trials
         self.secret_word = word
         self.secret_word_low = word.lower()
-        self.blanks = list('_' * len(self.secret_word))
+        self.blanks = list("_" * len(self.secret_word))
         self.used_letters = set() 
 
     @property
     def _blanks_string(self):
         """Returns a string with blanks."""
-        return ''.join(self.blanks)
+        return "".join(self.blanks)
 
     @property
     def _draw_hangman(self):
         """Returns a string with the current position of the hangman."""
-        return f'{self.HANGMAN_PICS[self.max_trials-self.trials]}\n'
+        return f"{self.HANGMAN_PICS[self.max_trials-self.trials]}\n"
 
     @property
     def _has_won(self):
@@ -135,7 +135,7 @@ def main():
     This word is to be guessed in the game.
     """
     with open("words.txt", "r+", encoding="UTF-8") as words:
-        secret_word = random.choice(words.read().split())
+        secret_word = choice(words.read().split())
         secret_word = "".join(secret_word)
     game = Hangman(secret_word)
     game.play()
