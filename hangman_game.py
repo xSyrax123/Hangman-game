@@ -1,59 +1,59 @@
 #!/usr/bin/env python3
 # Hangman game
-from random import choice
+import random
 
 
 class Hangman:
-    HANGMAN_PICS = (r"""
+    HANGMAN_PICS = (r'''
         ┌───┐
         │   │
             │
             │
             │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
             │
             │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
         |   │
             │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
        /│   │
             │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
        /│\  │
             │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
        /│\  │
        /    │
             │
-    ════════╛""", r"""
+    ════════╛''', r'''
         ┌───┐
         │   │
         O   │
        /│\  │
        / \  │
             │
-    ════════╛""")
+    ════════╛''')
     SPACER = "-" * 50
 
     def __init__(self, word):
@@ -62,18 +62,18 @@ class Hangman:
         self.trials = self.max_trials
         self.secret_word = word
         self.secret_word_low = word.lower()
-        self.blanks = list("_" * len(self.secret_word))
+        self.blanks = list('_' * len(self.secret_word))
         self.used_letters = set() 
 
     @property
     def _blanks_string(self):
         """Returns a string with blanks."""
-        return "".join(self.blanks)
+        return ''.join(self.blanks)
 
     @property
     def _draw_hangman(self):
         """Returns a string with the current position of the hangman."""
-        return f"{self.HANGMAN_PICS[self.max_trials-self.trials]}\n"
+        return f'{self.HANGMAN_PICS[self.max_trials-self.trials]}\n'
 
     @property
     def _has_won(self):
@@ -100,19 +100,18 @@ class Hangman:
         """The game stage."""
         print(f"\nSecret word ({len(self.secret_word)} letters): {self._blanks_string}")
         print(self._draw_hangman)
-        print(self.SPACER)
 
         while self.trials > 0 and not self._has_won:
+            print(self.SPACER)
+
             letter = input("\nEnter a letter: ").lower()
 
             if not self._is_valid_input(letter):
                 print("The value entered is invalid.\n")
-                print(self.SPACER)
                 continue
 
             if letter in self.used_letters:
                 print("This letter has already been entered. Enter another letter.\n")
-                print(self.SPACER)
                 continue
 
             guess_was_good = self._guess_letter(letter)
@@ -120,17 +119,15 @@ class Hangman:
 
             if guess_was_good:
                 print(f"{self._blanks_string}\n")
-                print(self.SPACER)
             else:
                 self.trials -= 1
                 print(f"You missed and lost a life. You have {self.trials} trials left.")
                 print(self._draw_hangman)
-                print(self.SPACER)
                     
         if self._has_won:
-            print(f"\nYou won. The secret word was: {self.secret_word}.")
+            print(f"You won. The secret word was: {self.secret_word}.")
         else:
-            print(f"\nYou lost. The secret word was: {self.secret_word}.")
+            print(f"You lost. The secret word was: {self.secret_word}.")
             
 
 def main():
@@ -138,7 +135,7 @@ def main():
     This word is to be guessed in the game.
     """
     with open("words.txt", "r+", encoding="UTF-8") as words:
-        secret_word = choice(words.read().split())
+        secret_word = random.choice(words.read().split())
         secret_word = "".join(secret_word)
     game = Hangman(secret_word)
     game.play()
